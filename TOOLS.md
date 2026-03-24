@@ -1,74 +1,67 @@
-# TOOLS.md - Available Tools & Integrations
+# TOOLS.md - Felix Tool Reference
 
-## Filesystem
-- Read/write/edit files in the workspace
-- Create directories
-- Search files by content or name
+This document outlines the tools and integrations available to Felix for executing GTM and operational tasks.
 
-## Shell / Exec
-- Run shell commands (bash)
-- Execute scripts (Node.js, Python, Bash)
-- Git operations (commit, push, pull, status)
+## Core Integrations (MCP & APIs)
 
-## Web / Browser
-- Browse websites
-- Scrape content
-- Fill forms
-- Take screenshots
+### 1. HubSpot (CRM)
+- **Purpose:** Manage pipeline, contacts, and deals.
+- **Access:** via MCP (`hubspot` server).
+- **Capabilities:** Read/write contacts, companies, deals, and activity history.
+- **Usage:** Use for pipeline reviews, lead qualification, and checking if a prospect is already in the CRM before launching outreach.
 
-## APIs & Integrations
+### 2. Apollo.io (Prospecting)
+- **Purpose:** Find and enrich B2B contacts and companies.
+- **Access:** via MCP (`apollo-io-mcp` server).
+- **Capabilities:** Search people/companies, enrich profiles, get job postings, find news.
+- **Usage:** Use for building lead lists, finding decision-makers, and detecting headcount/tech stack signals.
 
-### Stripe
-- Check revenue, subscriptions, payments
-- Monitor failed charges and webhook events
-- API key stored in environment (never in files)
+### 3. Instantly (Email Outreach)
+- **Purpose:** Execute cold email campaigns.
+- **Access:** via REST API (wrapper).
+- **Capabilities:** Create campaigns, add leads, pause/resume, read inbox replies.
+- **Usage:** Use for launching email sequences and triaging incoming responses.
 
-### Vercel
-- Check deployment status
-- View build logs
-- Trigger redeployments
+### 4. Walead / HeyReach (LinkedIn Outreach)
+- **Purpose:** Execute LinkedIn automation.
+- **Access:** via MCP (`walead` server).
+- **Capabilities:** Send connection requests, messages, read inbox.
+- **Usage:** Use for multi-channel outreach when the prospect is highly active on LinkedIn.
 
-### Railway
-- Monitor services
-- Check logs
-- Restart services if needed
+### 5. Google Workspace (Calendar & Gmail)
+- **Purpose:** Manage schedule and communications.
+- **Access:** via MCP (`google-calendar` and `gmail` servers).
+- **Capabilities:** Read events, read emails, draft responses.
+- **Usage:** Use for the Morning Brief (preparing for today's meetings) and triaging urgent emails.
 
-### GitHub
-- Create/review PRs and issues
-- Push commits
-- Manage repos under @javiConsu
+### 6. Apify (Advanced Scraping)
+- **Purpose:** Deep web scraping and signal detection.
+- **Access:** via REST API.
+- **Capabilities:** LinkedIn Job Search, LinkedIn Profile Scraper, G2/Capterra reviews.
+- **Usage:** Use for detecting job posting signals, analyzing competitor reviews, and extracting recent LinkedIn posts from prospects.
 
-### Resend (Email)
-- Send transactional emails
-- Check delivery status
-- Template management
+### 7. NewsData.io (News Signals)
+- **Purpose:** Track press mentions and company news.
+- **Access:** via REST API.
+- **Capabilities:** Search news articles by company name.
+- **Usage:** Use in the Signal Scanner to detect funding rounds, expansions, or leadership changes.
 
-### GoHighLevel (CRM)
-- Contact management
-- Pipeline tracking
-- Automation triggers
+### 8. Stripe (Revenue)
+- **Purpose:** Track financial metrics.
+- **Access:** via REST API.
+- **Capabilities:** Read MRR, daily revenue, failed payments.
+- **Usage:** Use for weekly revenue reports and monitoring payment health.
 
-### Social Media
-- **X/Twitter:** Post, schedule, monitor mentions
-- **LinkedIn:** Content posting, engagement tracking
-- **Instagram:** Content scheduling
+## Internal Tools
 
-### Telegram
-- Send/receive messages
-- Primary async communication channel with Javi
+### File System & Memory
+- Use standard bash commands (`cat`, `grep`, `echo`, `sed`) or built-in file tools to read and update memory files (`MEMORY.md`, `ICP-*.md`, `memory/YYYY-MM-DD.md`).
+- Always write to files instead of keeping mental notes.
 
-## Cron Jobs
-- Schedule recurring tasks
-- Use for precise timing needs
-- For flexible periodic checks, use HEARTBEAT.md instead
+### Web Search & Browsing
+- Use headless browser tools or `curl`/`wget` to scrape websites for onboarding (extracting value propositions, pricing, etc.).
+- Use search tools to research competitors or verify facts.
 
-## Memory Search
-- Built-in semantic search across all .md files
-- Automatically pulls relevant context
-- No extra configuration needed
-
-## Lessons Learned
-(Update this as you discover tool quirks)
-- Stripe API rate limits: stay under 100 requests/sec
-- Vercel deployments take 30-90 seconds
-- Railway needs explicit restart after env var changes
+### Code Execution
+- Use `node`, `python`, or bash to run scripts in the `skills/` directory.
+- For complex debugging, transition to "Scientist Mode" and create isolated `/learning` directories.
