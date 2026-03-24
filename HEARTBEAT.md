@@ -1,35 +1,59 @@
-# HEARTBEAT.md - Scheduled Checks & GTM Operations
+# HEARTBEAT.md — Felix CEO Cycles
 
-Things to check periodically (rotate through these, 2-4 times per day).
-Track check state in `memory/heartbeat-state.json`.
+Felix runs through this checklist on every heartbeat. The heartbeat keeps the project moving without waiting for Javi to ask.
 
-## Morning Check (8:00 CET) - The "Morning Brief"
-- [ ] **Calendar & Email:** Review today's meetings and urgent unread emails.
-- [ ] **Pipeline Health:** Check HubSpot for deals without activity in 7+ days or new inbound leads.
-- [ ] **Signal Scanner:** Run Apify/NewsData/Apollo to detect signals in the TAM (funding, job postings, news).
-- [ ] **Consolidate:** Generate the "Propuesta Diaria" (Daily Proposal) for Javi with max 5 actionable items (Urgente, Hoy, Oportunidad, Pipeline).
-- [ ] **System Health:** Verify all production sites and Stripe webhooks are up.
+## Every Heartbeat (any session start)
 
-## Midday Check (13:00 CET) - The "Execution Phase"
-- [ ] **Outbound Campaigns:** Check Instantly/HeyReach for campaign performance and new replies.
-- [ ] **Reply Triage:** Categorize incoming replies (Positive, Negative, Info) and draft responses for Javi's approval.
-- [ ] **Social Media:** Check LinkedIn/X mentions and engagement. Suggest strategic comments on prospect's posts.
-- [ ] **GitHub/Dev:** Review any open GitHub issues/PRs or deployment statuses.
+1. Read ROADMAP.md — what phase are we in? What is the current sprint?
+2. Read TEAM.md — what is each agent working on? What is blocked?
+3. Read today daily note memory/YYYY-MM-DD.md — what happened today?
+4. Check for open todos — are there tasks without an owner or without a status?
+5. If blocked tasks exist: unblock them or escalate to Javi immediately.
+6. If no open todos: outline next steps, present to Javi, get approval, delegate.
+7. Log the heartbeat check to daily notes: [HH:MM] HEARTBEAT: summary of state
 
-## Afternoon Check (17:00 CET) - The "Wrap-up"
-- [ ] **Email/Inbox:** Final check of emails and LinkedIn messages.
-- [ ] **Task Progress:** Review progress on active tasks and follow-ups.
-- [ ] **Memory Consolidation:** Update `memory/YYYY-MM-DD.md` with the day's activity. Extract durable facts to `MEMORY.md` or `ICP-*.md`.
-- [ ] **Summary:** Prepare a brief summary for Javi if anything notable happened.
+## Morning Heartbeat (08:00 Monday to Friday)
 
-## Weekly (Monday Morning) - The "Strategy Review"
-- [ ] **Revenue Report:** Stripe metrics (MRR, churn, new subs).
-- [ ] **Competitor Scan:** Run Ad Intelligence Monitor to check competitors' active ads.
-- [ ] **Content Plan:** Draft the LinkedIn content plan for the week based on market signals.
-- [ ] **Memory Cleanup:** Review and archive old daily notes (>30 days).
+1. Project status: What is the current phase? What shipped yesterday? What is due today?
+2. Team status: Any agent that finished a task overnight? Any blocker that appeared?
+3. Feedback signals: Any user feedback, error logs, or metric changes since yesterday?
+4. Market signals: Any relevant news about competitors or the target market? (NewsData.io)
+5. Proposed actions for today: Maximum 5 items, ranked by impact on the current phase goal.
 
-## Rules
-- Don't check the same thing twice within 30 minutes.
-- Skip checks if Javi is actively chatting (focus on conversation).
-- If something is down or broken (Stripe, Vercel), alert immediately - don't wait for next scheduled check.
-- Log all checks to `memory/heartbeat-state.json`.
+Output format:
+MORNING BRIEF — [Date]
+PROJECT: [Current phase and sprint status]
+TEAM: [Agent updates — who finished what, who is blocked]
+SIGNALS: [Any relevant feedback or market news]
+TODAY PRIORITIES: [1-5 items ranked by impact on current phase goal]
+Awaiting approval to proceed.
+
+## Midday Heartbeat (13:00)
+
+Check if any agent delivered output needing review. Check for new blockers. If everything is on track: log and continue, no interruption to Javi. If something needs attention: surface it with a clear recommendation, not just a problem.
+
+## Afternoon Wrap-up (17:30)
+
+1. What got done today? Update ROADMAP.md with completed tasks.
+2. What did not get done? Why? Move to tomorrow or flag as blocker.
+3. What was learned today? Any feedback signal, user response, or technical finding worth preserving?
+4. Update MEMORY.md if a durable pattern was identified.
+5. Write tomorrow proposed priorities to daily notes.
+6. Log: [17:30] DAY WRAP: summary
+
+## Weekly Deep Dive (Monday 08:00, before Morning Heartbeat)
+
+1. Sprint retrospective: What was planned last week? What shipped? What slipped? Why?
+2. Feedback loop review: What signals came in from users, metrics, or the market? What do they tell us?
+3. Roadmap update: Does the roadmap need to change based on what was learned?
+4. Team review: Is the current team right for the next phase? Is a new specialist needed?
+5. Trend scan: Any new tools, competitors, or market shifts worth tracking?
+6. Weekly brief to Javi: Summary of the above plus proposed sprint for the week.
+
+## Long-Running Agent Check (every heartbeat)
+
+Check TEAM.md for agents with active tasks. For each active agent: what was the last output? Is it still making progress? If an agent has been on the same task for 2+ heartbeats with no progress: flag as stalled, propose intervention. If an agent finished: review output, close the task in ROADMAP.md, delegate the next task.
+
+## Production Health (once live)
+
+Once SalesHackersGTM is deployed, add here: API uptime check, error rate from logs, Stripe payment failures, user-reported bugs in the feedback queue.

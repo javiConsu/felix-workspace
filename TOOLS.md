@@ -1,67 +1,52 @@
-# TOOLS.md - Felix Tool Reference
+# TOOLS.md — Felix Available Integrations
 
-This document outlines the tools and integrations available to Felix for executing GTM and operational tasks.
+Felix checks this file to know what tools are available before including them in any plan. He never assumes a tool is available — he verifies first.
 
-## Core Integrations (MCP & APIs)
+## Authenticated CLIs
 
-### 1. HubSpot (CRM)
-- **Purpose:** Manage pipeline, contacts, and deals.
-- **Access:** via MCP (`hubspot` server).
-- **Capabilities:** Read/write contacts, companies, deals, and activity history.
-- **Usage:** Use for pipeline reviews, lead qualification, and checking if a prospect is already in the CRM before launching outreach.
+| Tool | Status | Notes |
+| :--- | :--- | :--- |
+| gh (GitHub) | Configure | Required for code deployment and repo management |
+| stripe | Configure | Required for billing and subscription management |
 
-### 2. Apollo.io (Prospecting)
-- **Purpose:** Find and enrich B2B contacts and companies.
-- **Access:** via MCP (`apollo-io-mcp` server).
-- **Capabilities:** Search people/companies, enrich profiles, get job postings, find news.
-- **Usage:** Use for building lead lists, finding decision-makers, and detecting headcount/tech stack signals.
+## Product Integrations (Client-Provided Keys)
 
-### 3. Instantly (Email Outreach)
-- **Purpose:** Execute cold email campaigns.
-- **Access:** via REST API (wrapper).
-- **Capabilities:** Create campaigns, add leads, pause/resume, read inbox replies.
-- **Usage:** Use for launching email sequences and triaging incoming responses.
+These integrations are configured per-tenant in SalesHackersGTM. Felix uses them when operating as the product CEO to understand what the product does.
 
-### 4. Walead / HeyReach (LinkedIn Outreach)
-- **Purpose:** Execute LinkedIn automation.
-- **Access:** via MCP (`walead` server).
-- **Capabilities:** Send connection requests, messages, read inbox.
-- **Usage:** Use for multi-channel outreach when the prospect is highly active on LinkedIn.
+| Integration | Purpose | Auth Method | Status |
+| :--- | :--- | :--- | :--- |
+| Apollo.io | Prospecting, enrichment, buying signals | API key | Configure |
+| HubSpot | CRM — pipeline, contacts, deals | OAuth | Configure |
+| Instantly | Email sequencing and campaigns | API key | Configure |
+| Walead | LinkedIn outreach (MCP native) | API key | Configure |
+| Google Calendar | Morning brief, meeting context | OAuth | Configure |
+| Gmail | Email triage, reply drafts | OAuth | Configure |
+| Apify | Job postings, LinkedIn scraping | API token | Configure |
+| NewsData.io | Market news signals | API key (product key) | Configure |
 
-### 5. Google Workspace (Calendar & Gmail)
-- **Purpose:** Manage schedule and communications.
-- **Access:** via MCP (`google-calendar` and `gmail` servers).
-- **Capabilities:** Read events, read emails, draft responses.
-- **Usage:** Use for the Morning Brief (preparing for today's meetings) and triaging urgent emails.
+## Tool Abstraction Layer
 
-### 6. Apify (Advanced Scraping)
-- **Purpose:** Deep web scraping and signal detection.
-- **Access:** via REST API.
-- **Capabilities:** LinkedIn Job Search, LinkedIn Profile Scraper, G2/Capterra reviews.
-- **Usage:** Use for detecting job posting signals, analyzing competitor reviews, and extracting recent LinkedIn posts from prospects.
+Felix never calls integration APIs directly in plans. He references the abstraction layer interfaces:
 
-### 7. NewsData.io (News Signals)
-- **Purpose:** Track press mentions and company news.
-- **Access:** via REST API.
-- **Capabilities:** Search news articles by company name.
-- **Usage:** Use in the Signal Scanner to detect funding rounds, expansions, or leadership changes.
+| Interface | MVP Adapter | Fallback |
+| :--- | :--- | :--- |
+| sequencer | Instantly | Smartlead |
+| linkedin_outreach | Walead | HeyReach |
+| prospecting | Apollo | Clay |
+| crm | HubSpot | Pipedrive |
 
-### 8. Stripe (Revenue)
-- **Purpose:** Track financial metrics.
-- **Access:** via REST API.
-- **Capabilities:** Read MRR, daily revenue, failed payments.
-- **Usage:** Use for weekly revenue reports and monitoring payment health.
+When writing a brief for a specialist agent, Felix uses the interface name, not the specific tool. This keeps the product tool-agnostic.
 
-## Internal Tools
+## Development Tools
 
-### File System & Memory
-- Use standard bash commands (`cat`, `grep`, `echo`, `sed`) or built-in file tools to read and update memory files (`MEMORY.md`, `ICP-*.md`, `memory/YYYY-MM-DD.md`).
-- Always write to files instead of keeping mental notes.
+| Tool | Purpose | Status |
+| :--- | :--- | :--- |
+| Docker | Container management for DeerFlow | Required |
+| PostgreSQL | Database (Supabase or Railway) | Required |
+| Stripe CLI | Local webhook testing | Required |
+| Node.js / pnpm | Frontend build | Required |
+| Python 3.11 | Backend | Required |
 
-### Web Search & Browsing
-- Use headless browser tools or `curl`/`wget` to scrape websites for onboarding (extracting value propositions, pricing, etc.).
-- Use search tools to research competitors or verify facts.
+## Adding New Tools
 
-### Code Execution
-- Use `node`, `python`, or bash to run scripts in the `skills/` directory.
-- For complex debugging, transition to "Scientist Mode" and create isolated `/learning` directories.
+When Felix identifies a new tool that should be added to the stack, he: (1) Evaluates it against the abstraction layer. (2) Writes a proposal for Javi with integration cost, complexity, and expected value. (3) Gets approval before adding it to any roadmap phase.
