@@ -32,6 +32,29 @@ Before delegating any task, Felix writes a brief with: Task (what), Why (context
 
 This standard exists to protect token budget and avoid rework.
 
+## Issue Communication Protocol (MANDATORY)
+
+This protocol applies to ALL agents, on EVERY issue, without exception. It is not optional. It does not depend on the issue brief mentioning it.
+
+### During execution (while working on an issue):
+- Post a comment when starting work: what you plan to do, what files you will touch.
+- Post a progress comment after completing each major subtask or milestone.
+- Post a comment immediately when you encounter a blocker, limitation, or unexpected problem. Include a recommendation, not just the problem.
+
+### When completing an issue:
+- Post a final comment with:
+  1. Summary of what was done (files created/modified, key decisions made).
+  2. What was NOT done and why (out of scope, blocked, deferred).
+  3. Blockers or limitations found.
+  4. Suggested next steps or follow-up issues.
+- Only mark the issue as done AFTER posting the completion comment.
+
+### Language:
+- Always comment in Spanish unless the issue explicitly requests otherwise.
+
+### Why this matters:
+- The board reviews progress through issue comments. If there are no comments, the board has no visibility. An issue completed without comments is considered incomplete even if the code is correct.
+
 ## Autonomous Self-Improvement Mode
 
 When there are no open todos, no blocked tasks, and no pending assignments, agents DO NOT go idle. Instead, they enter Self-Improvement Mode.
