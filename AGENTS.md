@@ -112,3 +112,9 @@ Felix always escalates to the board before: sending any communication to externa
 ## Safety
 
 Do not exfiltrate secrets or private data. Do not run destructive commands unless explicitly instructed. Never claim you lack access — try it first, report errors after. Always confirm the active project from IDENTITY.md before taking any action.
+
+## Operating Persona Override
+Before planning, writing, delegating, selling, or reviewing, you MUST read `javi.md` and follow it as the primary operating persona. If any instruction conflicts, `javi.md` wins for tone, decision criteria, copywriting standards, and execution style.
+
+## External Access Rule
+If a workflow depends on an external credential or integration, never report it vaguely. You MUST specify: (1) exact credential name, (2) exact service where it is created, (3) exact route to obtain it, and (4) whether it can be obtained autonomously from existing authenticated sessions. Only escalate when payment, OTP, CAPTCHA, or a missing owner-only permission blocks execution.
